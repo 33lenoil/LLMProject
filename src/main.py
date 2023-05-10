@@ -62,13 +62,13 @@ class Window(Frame):
         exit()
 
     def click_submit_button(self, source_lan, destination_lan, source_text, destination_text):
-        print(source_text.get(1.0, "end-1c"))
-        print(source_lan.get())
-        print(destination_lan.get())
+        # print(source_text.get(1.0, "end-1c"))
+        # print(source_lan.get())
+        # print(destination_lan.get())
         result = llm(country_prompt.format(text=source_text.get(1.0, "end-1c"), source_language=source_lan.get(),
                                            destination_language=destination_lan.get()))
-        print(result)
-        print(len(result))
+        # print(result)
+        # print(len(result))
         destination_text.delete(1.0, "end")
         destination_text.insert(1.0, result[2:])
 
