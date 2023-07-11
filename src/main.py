@@ -2,12 +2,17 @@ from langchain import PromptTemplate
 from langchain.llms import OpenAI
 from tkinter import *
 from tkinter import ttk
+from langchain.tools import WikipediaQueryRun
+from langchain.utilities import WikipediaAPIWrapper
 
 LANGUAGES = ["Pick a language", "English", "French", "Spanish", "Chinese", "German", "Italian",
              "Portuguese", "Russian", "Japanese", "Dutch", "Arabic", "Hindi", "Hebrew"]
 
 # set up the LLM
 llm = OpenAI(temperature=0.9)
+
+# set up Wikipedia
+wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 
 # the prompt template
 country_prompt = PromptTemplate(
