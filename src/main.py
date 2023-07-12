@@ -28,6 +28,15 @@ class Window(Frame):
 
         self.pack(fill=BOTH, expand=1)
 
+        destination_text = Text(self)
+        wiki_text = Text(self)
+
+        # the submit button
+        submit_button = Button(self, text="Submit", fg="Blue", width=13, height=8,
+                               command=lambda: self.click_submit_button(source_lan, destination_lan, source_text,
+                                                                        destination_text, wiki_text))
+        submit_button.pack(side=BOTTOM)
+
         # the exit button
         exit_button = Button(self, text="Exit", fg="Red", width=13, height=8, command=self.click_exit_button)
         exit_button.pack(side=BOTTOM)
@@ -54,28 +63,29 @@ class Window(Frame):
         source_text = Text(self)
         source_text.pack(side=LEFT)
 
-        destination_text = Text(self)
-        destination_text.pack(side=RIGHT)
-
-        # the submit button
-        submit_button = Button(self, text="Submit", fg="Blue", width=13, height=8,
-                               command=lambda: self.click_submit_button(source_lan, destination_lan, source_text,
-                                                                        destination_text))
-        submit_button.pack(side=BOTTOM)
+        destination_text.pack(side=BOTTOM)
+        wiki_text.pack(side=TOP)
 
     def click_exit_button(self):
         exit()
 
-    def click_submit_button(self, source_lan, destination_lan, source_text, destination_text):
+    def click_submit_button(self, source_lan, destination_lan, source_text, destination_text, wiki_text):
         # print(source_text.get(1.0, "end-1c"))
         # print(source_lan.get())
         # print(destination_lan.get())
         result = llm(country_prompt.format(text=source_text.get(1.0, "end-1c"), source_language=source_lan.get(),
                                            destination_language=destination_lan.get()))
+        summary = llm("Find a word that people might search on Wikipedia in the following phrase: " + result)
+        # print(summary)
+        wiki = wikipedia.run(summary)
+        # print(wiki)
+
         # print(result)
         # print(len(result))
         destination_text.delete(1.0, "end")
         destination_text.insert(1.0, result[2:])
+        wiki_text.delete(1.0, "end")
+        wiki_text.insert(1.0, wiki)
 
 
 def main():
