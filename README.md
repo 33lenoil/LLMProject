@@ -1,3 +1,3 @@
 # LLMProject
 
-This is a project working with LLM for...
+This is a smart translator based on ChatGPT and Wikipedia.
