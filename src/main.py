@@ -1,5 +1,5 @@
 from langchain import PromptTemplate
-from langchain.llms import OpenAI
+from langchain.llms import OpenAIChat
 from tkinter import *
 from tkinter import ttk
 from langchain.tools import WikipediaQueryRun
@@ -9,7 +9,7 @@ LANGUAGES = ["Pick a language", "English", "French", "Spanish", "Chinese", "Germ
              "Portuguese", "Russian", "Japanese", "Dutch", "Arabic", "Hindi", "Hebrew"]
 
 # set up the LLM
-llm = OpenAI(temperature=0.9)
+llm = OpenAIChat(temperature=0.9)
 
 # set up Wikipedia
 wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
@@ -80,10 +80,10 @@ class Window(Frame):
         wiki = wikipedia.run(summary)
         # print(wiki)
 
-        # print(result)
-        # print(len(result))
+        print(result)
+        print(len(result))
         destination_text.delete(1.0, "end")
-        destination_text.insert(1.0, result[2:])
+        destination_text.insert(1.0, result)
         wiki_text.delete(1.0, "end")
         wiki_text.insert(1.0, wiki)
 
